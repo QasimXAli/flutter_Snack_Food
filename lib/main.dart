@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:snack_food/temp.dart';
+import 'package:snack_food/temp2.dart';
 import 'package:snack_food/theme_data.dart';
 
 void main() {
@@ -11,10 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      themeMode: ThemeMode.system,
-      theme: lightThemeData(context),
-      darkTheme: darkThemeData(context),
-      home: const MyHomePage(),
+      themeMode: ThemeMode.light,
+      home: const Temp2(),
     );
   }
 }
@@ -35,44 +35,59 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Snack Food'),
       ),
       body: SafeArea(
-        child: SizedBox(
-          height: 140,
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            children: [
-              Container(
+        child: ListView.builder(
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return SizedBox(
                 height: 200,
-                width: 200,
-                color: Colors.red,
-              ),
-              const SizedBox(
-                width: 20.0,
-              ),
-              Container(
-                height: 200,
-                width: 200,
-                color: Colors.blue,
-              ),
-              const SizedBox(
-                width: 20.0,
-              ),
-              Container(
-                height: 200,
-                width: 200,
-                color: Colors.green,
-              ),
-              const SizedBox(
-                width: 20.0,
-              ),
-              Card(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset('images/card1.jpg'),
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 15,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset('images/card1.jpg'),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ],
-          ),
+              );
+            } else {
+              return Column(
+                children: [
+                  const SizedBox(height: 20),
+                  ...List.generate(
+                    15,
+                    (index) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset('images/card1.jpg'),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
     );
